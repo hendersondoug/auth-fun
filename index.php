@@ -1,4 +1,6 @@
 <?php
+echo "__DIR__" . __DIR__;
+die;
 
   // Require composer autoloader
   require __DIR__ . '/vendor/autoload.php';
