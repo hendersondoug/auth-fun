@@ -31,7 +31,7 @@
 
   $userInfo = $auth0->getUser();
 
-create the Google client
+// create the Google client
 $client = new Google_Client();
 
 // echo "made a google client";
