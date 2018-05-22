@@ -35,16 +35,16 @@
 $client = new Google_Client();
 $client->setApprovalPrompt('force');
 
-echo "made a google client";
-var_dump($client);
-die;
+// echo "made a google client";
+// var_dump($client);
+// die;
 
 /**
  * Set your method for authentication. Depending on the API, This could be
  * directly with an access token, API key, or (recommended) using
  * Application Default Credentials.
  */
-$client->useApplicationDefaultCredentials();
+//$client->useApplicationDefaultCredentials();
 $client->addScope(Google_Service_Plus::PLUS_ME);
 
 // returns a Guzzle HTTP Client
