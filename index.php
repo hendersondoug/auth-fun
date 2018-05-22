@@ -30,12 +30,12 @@
   ]);
 
   $userInfo = $auth0->getUser();
-//   $connections = $people_service->people_connections->listPeopleConnections(
-//     'people/me', array('personFields' => 'names,emailAddresses'));
-
 
 // create the Google client
 $client = new Google_Client();
+
+echo "made a google client";
+die;
 
 /**
  * Set your method for authentication. Depending on the API, This could be
