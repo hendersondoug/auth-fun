@@ -3,7 +3,8 @@
     "description": "Basic sample for securing a WebApp with Auth0",
     "require": {
          "vlucas/phpdotenv": "2.4.0",
-         "auth0/auth0-php": "~5.0"
+         "auth0/auth0-php": "~5.0",
+        "google/apiclient": "^2.0"
     },
     "license": "MIT",
     "authors": [
