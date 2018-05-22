@@ -30,7 +30,18 @@
   ]);
 
   $userInfo = $auth0->getUser();
-
+  
+  // if we find good userInfo we are logged in, so let's look at a google api call
+  if ($userInfo) {
+  	$client = new Google_Client();
+  	$client->setApprovalPrompt('force');
+	$httpClient = $client->authorize();
+	$response = $httpClient->get('https://people.googleapis.com/v1/people/me/connections?personFields=names%2Cgenders');
+	var_dump($response);
+	die;
+  }
+  
+  
 // create the Google client
 // $client = new Google_Client();
 // $client->setApprovalPrompt('force');
@@ -54,6 +65,8 @@
 
 // make an HTTP request
 // $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
+
+https://people.googleapis.com/v1/people/me/connections?personFields=names%2Cgenders
 
 // $client->authenticate($_GET['code']);
 // $access_token = $client->getAccessToken();
