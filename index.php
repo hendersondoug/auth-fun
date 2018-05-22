@@ -55,12 +55,12 @@ $httpClient = $client->authorize();
 // make an HTTP request
 $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
 
-$client->authenticate($_GET['code']);
+$code = $_GET['code'];
 // $access_token = $client->getAccessToken();
 
 
-// var_dump($access_token);
-// die;
+var_dump($code);
+die;
 
 ?>
 <html>
