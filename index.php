@@ -54,8 +54,8 @@ $httpClient = $client->authorize();
 // make an HTTP request
 $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
 
-// var_dump($response);
-// die;
+var_dump($response);
+die;
 
 ?>
 <html>
