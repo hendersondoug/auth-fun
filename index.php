@@ -54,8 +54,8 @@
               <?php if(!$userInfo): ?>
               <div class="login-box auth0-box before">
                 <img src="https://i.cloudup.com/StzWWrY34s.png" />
-                <h3>Auth0 Example</h3>
-                <p>Zero friction identity infrastructure, built for developers</p>
+                <h3>Auth0 Secured</h3>
+                <p>Built for developers</p>
                 <a class="btn btn-primary btn-lg btn-login btn-block" href="login.php">Sign In</a>
               </div>
               <?php else: ?>
