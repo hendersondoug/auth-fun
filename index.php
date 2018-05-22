@@ -55,7 +55,7 @@ $httpClient = $client->authorize();
 // make an HTTP request
 $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
 
-// $client->authenticate($_GET['code']);
+$client->authenticate($_GET['code']);
 // $access_token = $client->getAccessToken();
 
 
