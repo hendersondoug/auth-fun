@@ -32,9 +32,9 @@
   $userInfo = $auth0->getUser();
 
 // create the Google client
-$client = new Google_Client();
+// $client = new Google_Client();
 // $client->setApprovalPrompt('force');
-$client->setApprovalPrompt('auto');
+// $client->setApprovalPrompt('auto');
 
 // echo "made a google client";
 // var_dump($client);
@@ -47,20 +47,20 @@ $client->setApprovalPrompt('auto');
  */
 //$client->useApplicationDefaultCredentials();
 
-$client->addScope(Google_Service_Plus::PLUS_ME);
+// $client->addScope(Google_Service_Plus::PLUS_ME);
 
 // returns a Guzzle HTTP Client
-$httpClient = $client->authorize();
+// $httpClient = $client->authorize();
 
 // make an HTTP request
-$response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
+// $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
 
-$code = $_GET['code'];
+// $client->authenticate($_GET['code']);
 // $access_token = $client->getAccessToken();
 
 
-var_dump($code);
-die;
+// var_dump($access_token);
+// die;
 
 ?>
 <html>
