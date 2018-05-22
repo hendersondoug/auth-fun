@@ -35,6 +35,7 @@
   if ($userInfo) {
   	$client = new Google_Client();
   	$client->setApprovalPrompt('force');
+  	$client->addScope(Google_Service_Plus::PLUS_ME);
 	$httpClient = $client->authorize();
 	$response = $httpClient->get('https://people.googleapis.com/v1/people/me/connections?personFields=names%2Cgenders');
 	var_dump($response);
