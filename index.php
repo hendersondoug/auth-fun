@@ -33,9 +33,11 @@
 
 // create the Google client
 $client = new Google_Client();
+$client->setApprovalPrompt('force');
 
-// echo "made a google client";
-// die;
+echo "made a google client";
+var_dump($client);
+die;
 
 /**
  * Set your method for authentication. Depending on the API, This could be
