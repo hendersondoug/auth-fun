@@ -31,28 +31,28 @@
 
   $userInfo = $auth0->getUser();
 
-// create the Google client
-// $client = new Google_Client();
-// 
+create the Google client
+$client = new Google_Client();
+
 // echo "made a google client";
 // die;
-// 
-// /**
-//  * Set your method for authentication. Depending on the API, This could be
-//  * directly with an access token, API key, or (recommended) using
-//  * Application Default Credentials.
-//  */
-// $client->useApplicationDefaultCredentials();
-// $client->addScope(Google_Service_Plus::PLUS_ME);
-// 
-// // returns a Guzzle HTTP Client
-// $httpClient = $client->authorize();
-// 
-// // make an HTTP request
-// $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
-// 
-// var_dump($response);
-// die;
+
+/**
+ * Set your method for authentication. Depending on the API, This could be
+ * directly with an access token, API key, or (recommended) using
+ * Application Default Credentials.
+ */
+$client->useApplicationDefaultCredentials();
+$client->addScope(Google_Service_Plus::PLUS_ME);
+
+// returns a Guzzle HTTP Client
+$httpClient = $client->authorize();
+
+// make an HTTP request
+$response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
+
+var_dump($response);
+die;
 
 ?>
 <html>
