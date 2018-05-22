@@ -33,8 +33,8 @@
 
 // create the Google client
 $client = new Google_Client();
-// $client->setApprovalPrompt('force');
-$client->setApprovalPrompt('auto');
+$client->setApprovalPrompt('force');
+// $client->setApprovalPrompt('auto');
 
 // echo "made a google client";
 // var_dump($client);
@@ -54,8 +54,8 @@ $httpClient = $client->authorize();
 // make an HTTP request
 $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
 
-var_dump($response);
-die;
+// var_dump($response);
+// die;
 
 ?>
 <html>
