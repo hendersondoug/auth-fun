@@ -33,8 +33,8 @@
 
 // create the Google client
 $client = new Google_Client();
-$client->setApprovalPrompt('force');
-// $client->setApprovalPrompt('auto');
+// $client->setApprovalPrompt('force');
+$client->setApprovalPrompt('auto');
 
 // echo "made a google client";
 // var_dump($client);
