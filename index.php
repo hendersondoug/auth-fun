@@ -12,6 +12,7 @@
   $client_secret = getenv('AUTH0_CLIENT_SECRET');
   $redirect_uri  = getenv('AUTH0_CALLBACK_URL');
   $audience      = getenv('AUTH0_AUDIENCE');
+  //$google_env    = getenv("GOOGLE_APPLICATION_CREDENTIALS");
 
   if($audience == ''){
     $audience = 'https://' . $domain . '/userinfo';
@@ -30,52 +31,91 @@
   ]);
 
   $userInfo = $auth0->getUser();
+ 
+	/**
+	* Expands the home directory alias '~' to the full path.
+	* @param string $path the path to expand.
+	* @return string the expanded path.
+	*/
+
+	function expandHomeDirectory($path) {
+	$homeDirectory = getenv('HOME');
+	echo "home directory: " . $homeDirectory;
+	die;
+	if (empty($homeDirectory)) {
+		$homeDirectory = getenv('HOMEDRIVE') . getenv('HOMEPATH');
+	}
+	return str_replace('~', realpath($homeDirectory), $path);
+	}
+
   
+  function getClient() {
+    $client = new Google_Client();
+    $client->setApplicationName('Doug Calls Google API');
+    $client->setScopes(Google_Service_PeopleService::CONTACTS_READONLY);
+    $client->setAuthConfig('google-setup.json');
+    $client->setAccessType('offline');
+
+    // Load previously authorized credentials from a file.
+    $credentialsPath = expandHomeDirectory('google-setup.json');
+    if (file_exists($credentialsPath)) {
+        $accessToken = json_decode(file_get_contents($credentialsPath), true);
+    } else {
+        // Request authorization from the user.
+        $authUrl = $client->createAuthUrl();
+        printf("Open the following link in your browser:\n%s\n", $authUrl);
+        print 'Enter verification code: ';
+        $authCode = trim(fgets(STDIN));
+
+        // Exchange authorization code for an access token.
+        $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+
+        // Store the credentials to disk.
+        if (!file_exists(dirname($credentialsPath))) {
+            mkdir(dirname($credentialsPath), 0700, true);
+        }
+        file_put_contents($credentialsPath, json_encode($accessToken));
+        printf("Credentials saved to %s\n", $credentialsPath);
+    }
+    $client->setAccessToken($accessToken);
+
+    // Refresh the token if it's expired.
+    if ($client->isAccessTokenExpired()) {
+        $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+        file_put_contents($credentialsPath, json_encode($client->getAccessToken()));
+    }
+    return $client;
+}
+
   // if we find good userInfo we are logged in, so let's look at a google api call
   if ($userInfo) {
-  	$client = new Google_Client();
-  	$client->setApprovalPrompt('force');
-  	$client->addScope(Google_Service_Plus::PLUS_ME);
-	$httpClient = $client->authorize();
-	$response = $httpClient->get('https://people.googleapis.com/v1/people/me/connections?personFields=names%2Cgenders');
-	var_dump($response);
-	die;
+	// Get the API client and construct the service object.
+	$client = getClient();
+	$service = new Google_Service_PeopleService($client);
+
+	// Print the names for up to 10 connections.
+	$optParams = array(
+	  'pageSize' => 10,
+	  'personFields' => 'names,emailAddresses',
+	);
+	$results = $service->people_connections->listPeopleConnections('people/me', $optParams);
+
+	if (count($results->getConnections()) == 0) {
+	  print "No connections found.\n";
+	} else {
+	  print "People:\n";
+	  foreach ($results->getConnections() as $person) {
+		if (count($person->getNames()) == 0) {
+		  print "No names found for this connection\n";
+		} else {
+		  $names = $person->getNames();
+		  $name = $names[0];
+		  printf("%s\n", $name->getDisplayName());
+		}
+	  }
+	}
   }
   
-  
-// create the Google client
-// $client = new Google_Client();
-// $client->setApprovalPrompt('force');
-// $client->setApprovalPrompt('auto');
-
-// echo "made a google client";
-// var_dump($client);
-// die;
-
-/**
- * Set your method for authentication. Depending on the API, This could be
- * directly with an access token, API key, or (recommended) using
- * Application Default Credentials.
- */
-//$client->useApplicationDefaultCredentials();
-
-// $client->addScope(Google_Service_Plus::PLUS_ME);
-
-// returns a Guzzle HTTP Client
-// $httpClient = $client->authorize();
-
-// make an HTTP request
-// $response = $httpClient->get('https://www.googleapis.com/plus/v1/people/me');
-
-https://people.googleapis.com/v1/people/me/connections?personFields=names%2Cgenders
-
-// $client->authenticate($_GET['code']);
-// $access_token = $client->getAccessToken();
-
-
-// var_dump($access_token);
-// die;
-
 ?>
 <html>
     <head>
